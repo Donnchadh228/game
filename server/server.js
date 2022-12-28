@@ -1,3 +1,4 @@
+require("dotenv").config()
 const express = require("express")
 const http = require("http")
 const path = require("path")
@@ -8,15 +9,15 @@ const app = express()
 const server = http.Server(app)
 const io = socketIO(server)
 
-app.set("port", 5000)
+app.set("port", process.env.PORT)
 app.use("/static", express.static(path.dirname(__dirname) + "/static"))
 
 app.get("/", (req, res) => {
 	res.sendFile(path.join(__dirname, "index.html"))
 })
 
-server.listen(5000, () => {
-	console.log("work on port 5000")
+server.listen(process.env.PORT, () => {
+	console.log(`work on port ${process.env.PORT}`)
 })
 let players = null
 io.on("connection", (socket) => {
